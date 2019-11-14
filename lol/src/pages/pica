@@ -1,0 +1,200 @@
+import React, { Component } from 'react';
+import { TouchableOpacity, View, ActivityIndicator, Text, Alert} from 'react-native';
+export default class App extends Component {
+handlePress = async () => {
+  fetch('https://data.advance88.hasura-app.io/v1/query', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          "type": "select",
+    "args": {
+        "table": "author",
+        "columns": [
+            "name"
+        ],
+        "limit": "1"
+    }
+      })})
+    .then((response) => response.json())
+    .then((responseJson) => {
+ Alert.alert("Author name at 0th index:  " + responseJson[0].name);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+  render(){
+  return(
+   <View style={{paddingTop: 50, paddingLeft: 50 }}>
+   <Text> Some other text </Text>
+    <Text> Some other text </Text>
+    <TouchableOpacity onPress={this.handlePress.bind(this)}>
+     <Text style={{paddingTop: 50, paddingLeft: 50, color: '#FF0000'}}> Click me to see the name </Text>
+    </TouchableOpacity></View> 
+  );
+}
+}
+
+
+onregister = e => {
+      e.preventDefault();
+      const newUser = {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        password2: this.state.password2
+      };
+      console.log(JSON.stringify(newUser));
+      fetch('http://14.139.38.107:5000/api/users/register',{
+        method: 'POST',
+         headers: new Headers({
+             'Content-Type': 'application/json', // <-- Specifying the Content-Type
+        }),
+        body: JSON.stringify(newUser),
+      })
+      .then((response) => {
+        if (response.status == 400 ){
+          response.json().then((responseJson)=>{
+            console.log(responseJson);
+          })
+        }
+        else{
+          this.setState({
+            name: "",
+            email:"",
+            password: "",
+            password2: "",
+          })
+          this.props.navigation.navigate('Login');
+        }
+      })
+      .catch((error) =>{
+        console.error(error);
+      }); 
+  };
+  import React, { Component } from 'react';
+import { TouchableOpacity, View, ActivityIndicator, Text, Alert} from 'react-native';
+import axios from 'axios';
+export default class App extends Component {
+handlePress = async () => {
+  const newUser = {
+    username: 'praj2',
+    firstname:'tahaw',
+	  lastname:'hg',
+    password: 'prajwal',
+    password_con: 'prajwal',
+    email: 'praj4@g.com'
+  };
+  //console.log(JSON.stringify(newUser));
+  fetch('http://172.24.17.3:8000/api/register',{
+    method: 'POST',
+    // api/register
+     headers: new Headers({
+         'Content-Type': 'application/json' // <-- Specifying the Content-Type
+    }),
+    body: JSON.stringify(newUser),
+  })
+  .then((response) => {
+    //console.log(response);
+    if (response.status == 400 ){
+      response.json().then((responseJson)=>{
+        console.log(responseJson+"hiasdk");
+      })
+    }
+    else{
+      this.setState({
+        username: '',
+    firstname:'',
+	  lastname:'',
+    password: '',
+    password_con: '',
+    email: ''
+      })
+      // this.props.navigation.navigate('Login');
+    }
+  })
+  .catch((error) =>{
+    console.error('Hi therkldalk'+error);
+  });
+  // axios
+  //     .post('http://172.24.17.3:8000/api/register', { body: newUser })
+  //     .then(res => {
+  //       //this.fetchNotes();
+  //       this.setState({ modalOpen: false });
+  //     })
+  //     .catch(err => console.log(err));
+}
+  render(){
+  return(
+   <View style={{paddingTop: 50, paddingLeft: 50 }}>
+   <Text> Some other text </Text>
+    <Text> Some other text </Text>
+    <TouchableOpacity onPress={this.handlePress.bind(this)}>
+     <Text style={{paddingTop: 50, paddingLeft: 50, color: '#FF0000'}}> Click me to see the name </Text>
+    </TouchableOpacity></View> 
+  );
+}
+}
+/////////////////////////////
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Text,
+  AppRegistry
+} from 'react-native';
+
+//import Camera from 'react-native-Camera';
+
+export default class App extends Component   {
+  render() {
+    return (
+      <View style={styles.container}>
+        {/* <Camera
+           ref={(cam)=>{
+             this.camera=cam
+           }}
+           style={styles.View}
+           aspect={Camera.constants.Aspect.fill}>
+            <Text style={styles.capture}
+            onPress={this.takePicture.bind(this)}>
+              [CAPTURE_IMAGE]
+            </Text>
+        </Camera> */}
+      </View>
+    );
+  }
+
+
+// takePicture(){
+//   const options={}
+//   this.camera.capture({metadata:options}).then((data)=>{
+//     console.log(data)
+//   }).catch((error)=>{
+//     console.log(error)
+//   })
+//   }
+ }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  view: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignment: 'center'
+  },
+  capture:{
+    flex: 0,
+    backgroundColor: 'steelblue',
+    borderRadious: 10,
+    color: 'red',
+    padding: 15,
+    margin:45
+  }
+});
+module.exports = todo;
